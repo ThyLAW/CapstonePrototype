@@ -1,1 +1,2 @@
 failure-threshold: info
+no-fail: true
