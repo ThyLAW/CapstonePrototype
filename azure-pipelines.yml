@@ -18,7 +18,7 @@ stages:
           - task: CmdLine@2
             displayName: hadolint
             inputs:
-              script: "cat $(Build.SourcesDirectory)/Dockerfile | docker run --rm -i -v $(Build.SourcesDirectory)/hadolint.yaml:/.config/hadolint.yaml hadolint/hadolint"
+              script: "docker run --rm -i hadolint/hadolint < $(Build.Repository.LocalPath)/Dockerfile"
               workingDirectory: "$(Build.SourcesDirectory)"
             continueOnError: true
           - task: Docker@2
