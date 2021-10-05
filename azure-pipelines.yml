@@ -18,7 +18,7 @@ stages:
           - task: CmdLine@2
             displayName: hadolint
             inputs:
-              script: "docker run --rm -i hadolint/hadolint:v1.17.7 < Dockerfile"
+              script: "cat .\\Dockerfile | docker run --rm -i hadolint/hadolint"
               workingDirectory: "$(Build.SourcesDirectory)"
           - task: Docker@2
             displayName: "Build and push the image to container registry"
