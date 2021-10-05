@@ -1,2 +1,1 @@
-ignored:
-  - DL3059
+failure-threshold: info
