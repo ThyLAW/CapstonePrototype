@@ -1,2 +1,2 @@
-failure-threshold: info
+failure-threshold: error
 no-fail: true
