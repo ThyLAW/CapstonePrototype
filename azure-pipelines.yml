@@ -15,12 +15,12 @@ stages:
        pool:
         vmImage: "ubuntu-20.04"
         steps:
-        - task: CmdLine@2
-          displayName: hadolint
-          inputs:
-            script: "cat $(Build.SourcesDirectory)/Dockerfile | docker run --rm -i -v $(Build.SourcesDirectory)/hadolint.yaml:/.config/hadolint.yaml hadolint/hadolint"
-            workingDirectory: "$(Build.SourcesDirectory)"
-          continueOnError: false
+          - task: CmdLine@2
+            displayName: hadolint
+            inputs:
+              script: "cat $(Build.SourcesDirectory)/Dockerfile | docker run --rm -i -v $(Build.SourcesDirectory)/hadolint.yaml:/.config/hadolint.yaml hadolint/hadolint"
+              workingDirectory: "$(Build.SourcesDirectory)"
+            continueOnError: false
 
   - stage: "Build"
     displayName: "Build and push"
