@@ -21,6 +21,9 @@ stages:
               script: "cat $(Build.SourcesDirectory)/Dockerfile | docker run --rm -i -v $(Build.SourcesDirectory)/hadolint.yaml:/.config/hadolint.yaml hadolint/hadolint"
               workingDirectory: "$(Build.SourcesDirectory)"
             continueOnError: false
+          - task: WhiteSource@21
+            inputs:
+              projectName: 'CapstonePrototype'
 
   - stage: "Build"
     displayName: "Build and push"
