@@ -10,11 +10,11 @@ stages:
   - stage: "Test"
     displayName: "Testing"
     jobs:
-     - job: "Test"
-       displayName: "Test Job"
-       pool:
-         vmImage: "ubuntu-20.04"
-         steps:
+      - job: "Test"
+        displayName: "Test Job"
+        pool:
+          vmImage: "ubuntu-20.04"
+        steps:
           - task: CmdLine@2
             displayName: hadolint
             inputs:
