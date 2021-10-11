@@ -15,7 +15,7 @@ stages:
         pool:
           vmImage: "ubuntu-20.04"
         steps:
-          - task: CmdLine@2
+          - task: PowerShell@2
             displayName: hadolint
             inputs:
               script: "cat $(Build.SourcesDirectory)/Dockerfile | docker run --rm -i -v $(Build.SourcesDirectory)/hadolint.yaml:/.config/hadolint.yaml hadolint/hadolint | Tee-Object -FilePath $(Build.ArtifactStagingDirectory)/output.txt"
