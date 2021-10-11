@@ -24,7 +24,8 @@ stages:
           - task: WhiteSource@21
             inputs:
               projectName: 'CapstonePrototype'
-
+          - task: PublishPipelineArtifact@1
+          
   - stage: "Build"
     displayName: "Build and push"
     dependsOn: Test
