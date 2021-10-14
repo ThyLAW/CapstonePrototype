@@ -7,20 +7,37 @@ variables:
   tag: "$(Build.BuildId)"
 
 stages:
-  - stage: "Build"
-    displayName: "Build and push"
+  - stage: "Test"
+    displayName: "Testing"
     jobs:
-      - job: "Build"
-        displayName: "Build job"
+      - job: "Test"
+        displayName: "Test Job"
         pool:
           vmImage: "ubuntu-20.04"
         steps:
           - task: CmdLine@2
             displayName: hadolint
             inputs:
-              script: "cat $(Build.SourcesDirectory)/Dockerfile | docker run --rm -i -v $(Build.SourcesDirectory)/hadolint.yaml:/.config/hadolint.yaml hadolint/hadolint"
+              script: "cat $(Build.SourcesDirectory)/Dockerfile | docker run --rm -i -v $(Build.SourcesDirectory)/hadolint.yaml:/.config/hadolint.yaml hadolint/hadolint > $(Build.ArtifactStagingDirectory)/output.txt && cat $(Build.SourcesDirectory)/Dockerfile | docker run --rm -i -v $(Build.SourcesDirectory)/hadolint.yaml:/.config/hadolint.yaml hadolint/hadolint"
               workingDirectory: "$(Build.SourcesDirectory)"
             continueOnError: false
+          - task: WhiteSource@21
+            inputs:
+              projectName: 'CapstonePrototype'
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: $(Build.ArtifactStagingDirectory)
+              artifactName: hadolintOutput
+          
+  - stage: "Build"
+    displayName: "Build and push"
+    dependsOn: Test
+    jobs:
+      - job: "Build"
+        displayName: "Build job"
+        pool:
+          vmImage: "ubuntu-20.04"
+        steps:
           - task: Docker@2
             displayName: "Build and push the image to container registry"
             inputs:
